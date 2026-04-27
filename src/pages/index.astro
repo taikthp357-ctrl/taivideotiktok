@@ -1,0 +1,26 @@
+---
+import Layout from '../components/Layout.astro';
+import LinkInput from '../components/LinkInput.astro';
+import FaqBlock from '../components/FaqBlock.astro';
+import DisclaimerBox from '../components/DisclaimerBox.astro';
+import AdSlot from '../components/AdSlot.astro';
+---
+
+<Layout title="TaiVideoTikTok - Trang chủ">
+  <section class="hero card">
+    <h1>Kiểm tra và tạo liên kết tải video khi nguồn hỗ trợ</h1>
+    <p>Giải pháp nhẹ, ưu tiên an toàn chính sách và quyền sử dụng nội dung.</p>
+  </section>
+
+  <LinkInput />
+
+  <section class="grid-3">
+    <article class="card"><h3>Không lưu video</h3><p>Không host hoặc proxy nội dung video.</p></article>
+    <article class="card"><h3>Không cần đăng nhập</h3><p>Nhập link và kiểm tra nhanh.</p></article>
+    <article class="card"><h3>Chỉ xử lý nội dung bạn có quyền</h3><p>Tôn trọng bản quyền và điều khoản nền tảng.</p></article>
+  </section>
+
+  <AdSlot />
+  <FaqBlock />
+  <DisclaimerBox />
+</Layout>

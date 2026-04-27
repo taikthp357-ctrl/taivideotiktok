@@ -1,0 +1,25 @@
+---
+import type { DownloadItem } from '../providers/provider-types';
+
+interface Props {
+  items?: DownloadItem[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+<ul class="result-list">
+  {items.map((item) => (
+    <li class="card">
+      <strong>{item.label}</strong>
+      <p>{item.quality} · {item.format}</p>
+      {item.download_url ? (
+        <a class="button" href={item.download_url} rel="nofollow noopener noreferrer">
+          Tải xuống
+        </a>
+      ) : (
+        <span class="notice">Chưa có link tải trực tiếp.</span>
+      )}
+    </li>
+  ))}
+</ul>

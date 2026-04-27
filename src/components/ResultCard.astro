@@ -1,0 +1,23 @@
+---
+import type { ResolveResult } from '../providers/provider-types';
+import QualityList from './QualityList.astro';
+
+interface Props {
+  result: ResolveResult | null;
+}
+
+const { result } = Astro.props;
+---
+
+{result && (
+  <section class="result card">
+    <h3>Kết quả: {result.status}</h3>
+    {result.thumbnail && <img src={result.thumbnail} alt="Thumbnail" loading="lazy" width="320" />}
+    {result.source_url && <p>Nguồn: <a href={result.source_url} rel="nofollow noopener noreferrer">{result.source_url}</a></p>}
+    {result.embed_url && <p>Embed: <a href={result.embed_url} rel="nofollow noopener noreferrer">Mở embed</a></p>}
+    {result.status === 'ready' && <QualityList items={result.items} />}
+    {result.status === 'metadata_only' && <p class="notice">{result.reason ?? 'Chỉ có metadata cho liên kết này.'}</p>}
+    {result.status === 'blocked' && <p class="notice">{result.reason ?? 'Yêu cầu bị chặn theo chính sách.'}</p>}
+    {result.status === 'failed' && <p class="notice">{result.reason ?? 'Có lỗi xảy ra. Vui lòng thử lại.'}</p>}
+  </section>
+)}
