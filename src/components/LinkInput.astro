@@ -1,0 +1,60 @@
+<div class="card">
+  <form id="resolve-form">
+    <div class="input-row">
+      <input type="url" id="url" name="url" placeholder="Dán link TikTok / Douyin / YouTube" required />
+      <button class="button" type="submit">Kiểm tra link</button>
+    </div>
+    <label>
+      <input type="checkbox" id="acceptTerms" name="acceptTerms" required />
+      Tôi xác nhận có quyền tải xuống và sử dụng nội dung này.
+    </label>
+  </form>
+
+  <p id="loading" hidden>Đang kiểm tra...</p>
+  <p id="error" class="notice" hidden></p>
+  <pre id="result" class="result" hidden></pre>
+</div>
+
+<script>
+  const form = document.getElementById('resolve-form');
+  const loading = document.getElementById('loading');
+  const errorEl = document.getElementById('error');
+  const resultEl = document.getElementById('result');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement)) return;
+
+    const formData = new FormData(form);
+    const url = String(formData.get('url') || '');
+    const acceptTerms = formData.get('acceptTerms') === 'on';
+
+    loading?.removeAttribute('hidden');
+    errorEl?.setAttribute('hidden', 'true');
+    resultEl?.setAttribute('hidden', 'true');
+
+    try {
+      const response = await fetch('/api/resolve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url, accept_terms: acceptTerms })
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.reason || 'Không thể xử lý URL.');
+      }
+
+      if (resultEl) {
+        resultEl.textContent = JSON.stringify(data, null, 2);
+        resultEl.removeAttribute('hidden');
+      }
+    } catch (error) {
+      if (errorEl) {
+        errorEl.textContent = error instanceof Error ? error.message : 'Có lỗi xảy ra';
+        errorEl.removeAttribute('hidden');
+      }
+    } finally {
+      loading?.setAttribute('hidden', 'true');
+    }
+  });
+</script>

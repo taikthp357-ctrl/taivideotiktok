@@ -1,59 +1,33 @@
-# TaiVideoTikTok
+# TaiVideoTikTok (MVP)
 
-Website MVP cho công cụ xử lý link TikTok theo hướng an toàn, hợp lệ và dễ mở rộng.
+MVP web checker cho TikTok/Douyin/YouTube URL với định hướng an toàn pháp lý và ads policy.
 
-## Mục tiêu
+## Nguyên tắc
+- Không lưu video.
+- Không lưu URL gốc lâu dài.
+- Không proxy hoặc tải video qua server.
+- YouTube mặc định chỉ metadata/embed.
 
-- Cho người dùng nhập link TikTok.
-- Kiểm tra định dạng link phía client.
-- Hiển thị trạng thái xử lý rõ ràng.
-- Chuẩn bị sẵn điểm nối backend `/api/resolve` cho giai đoạn sau.
-- Có thông báo quyền sử dụng nội dung trước khi xử lý.
-
-## Ranh giới an toàn
-
-Dự án này không triển khai cơ chế vượt bảo vệ, tải trái phép, hoặc gỡ watermark/logo khỏi nội dung mà người dùng không có quyền. Backend sau này chỉ nên xử lý:
-
-- Video do người dùng sở hữu.
-- Video được cấp phép rõ ràng.
-- Video hoặc file do người dùng tự tải lên hợp lệ.
-- Nguồn API hợp lệ theo điều khoản của nền tảng.
-
-## Cấu trúc thư mục
-
-```text
-.
-├── index.html
-├── terms.html
-├── assets/
-│   ├── css/style.css
-│   └── js/app.js
-├── data/
-│   └── posts.json
-├── docs/
-│   ├── ARCHITECTURE.md
-│   ├── ROADMAP.md
-│   └── LEGAL.md
-├── .gitignore
-└── README.md
-```
+## Tech stack
+- Astro
+- TypeScript
+- Vanilla CSS
 
 ## Chạy local
-
-Mở trực tiếp file `index.html` bằng trình duyệt hoặc dùng extension Live Server trong VS Code.
-
-## Deploy GitHub Pages
-
-Vào repo GitHub:
-
-```text
-Settings → Pages → Deploy from branch → main → /root
+```bash
+npm install
+npm run dev
 ```
 
-## Giai đoạn tiếp theo
+## Build
+```bash
+npm run build
+npm run preview
+```
 
-1. Hoàn thiện UI/UX.
-2. Tạo backend `/api/resolve`.
-3. Thêm rate limit, captcha, logging.
-4. Thêm điều khoản sử dụng và form báo cáo nội dung vi phạm.
-5. Chỉ xử lý video khi người dùng có quyền hợp lệ.
+## ENV
+Sao chép `.env.example` thành `.env` và cấu hình theo hạ tầng.
+
+## Deploy
+- Vercel/Cloudflare Pages: dùng mode server để giữ API route.
+- GitHub Pages (static): cần tách `/api/resolve` thành serverless endpoint riêng.
